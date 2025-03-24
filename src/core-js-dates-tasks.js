@@ -209,9 +209,7 @@ function getWeekNumberByDate(date) {
   const tempDate = new Date(date);
   tempDate.setDate(tempDate.getDate() + 4 - (tempDate.getDay() || 7));
   const firstDayOfYear = new Date(tempDate.getFullYear(), 0, 1);
-  return Math.ceil(
-    ((tempDate - firstDayOfYear) / 86400000 + 1) / 7
-  );
+  return Math.ceil(((tempDate - firstDayOfYear) / 86400000 + 1) / 7);
 }
 
 /**
