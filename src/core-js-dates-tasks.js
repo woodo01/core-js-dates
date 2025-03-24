@@ -74,8 +74,14 @@ function getDayName(date) {
  * Date('2024-02-13T00:00:00Z') => Date('2024-02-16T00:00:00Z')
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
-function getNextFriday(/* date */) {
-  throw new Error('Not implemented');
+function getNextFriday(date) {
+  const currentDay = date.getDay();
+  const daysTillFriday = (5 - currentDay + 7) % 7;
+  // If today is Friday, get next Friday (add 7 days)
+  const daysToAdd = daysTillFriday === 0 ? 7 : daysTillFriday;
+  const result = new Date(date);
+  result.setDate(date.getDate() + daysToAdd);
+  return result;
 }
 
 /**
@@ -89,8 +95,11 @@ function getNextFriday(/* date */) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountDaysInMonth(month, year) {
+  // The month in Date() is 0-indexed (0 for January), but our parameter is 1-indexed
+  // So when creating a Date for the next month, we use the provided month directly
+  // This gives us the last day of the requested month
+  return new Date(year, month, 0).getDate();
 }
 
 /**
@@ -104,8 +113,13 @@ function getCountDaysInMonth(/* month, year */) {
  * '2024-02-01T00:00:00.000Z', '2024-02-02T00:00:00.000Z'  => 2
  * '2024-02-01T00:00:00.000Z', '2024-02-12T00:00:00.000Z'  => 12
  */
-function getCountDaysOnPeriod(/* dateStart, dateEnd */) {
-  throw new Error('Not implemented');
+function getCountDaysOnPeriod(dateStart, dateEnd) {
+  const start = new Date(dateStart);
+  const end = new Date(dateEnd);
+  // Calculate the time difference in milliseconds
+  const diffTime = Math.abs(end - start);
+  // Convert to days and add 1 to include both start and end dates
+  return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 }
 
 /**
